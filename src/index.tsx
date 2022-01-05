@@ -12,7 +12,7 @@ interface RequireAuthProps {
   redirectTo: string
 }
 function RequireAuth({ children, redirectTo }: RequireAuthProps) {
-  let isAuthenticated = true
+  let isAuthenticated = false
   return isAuthenticated ? children : <Navigate to={redirectTo} />
 }
 

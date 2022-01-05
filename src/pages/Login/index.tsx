@@ -1,5 +1,7 @@
 import React from 'react'
 import { Input, Button } from 'antd'
+import logo from '../../images/bulnesLogo.png'
+import '../../images/logo.css'
 
 function Login() {
   return (
@@ -10,10 +12,25 @@ function Login() {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor: '#99b6de',
       }}
     >
-      <div>
-        <div>
+      <div
+        style={{
+          padding: '120px 180px',
+          borderRadius: 15,
+          backgroundColor: 'white',
+          textAlign: 'center',
+        }}
+      >
+        <img src={logo} className="logo" alt="logo" />
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+          }}
+        >
           <p style={{ margin: 0 }}>Nombre de usuario</p>
           <Input placeholder="Usuario" />
         </div>
@@ -22,7 +39,9 @@ function Login() {
           <Input placeholder="Contraseña" />
         </div>
         <br />
-        <Button type="primary">Iniciar sesión</Button>
+        <Button type="primary" style={{ borderRadius: 6 }}>
+          Iniciar sesión
+        </Button>
       </div>
     </div>
   )
