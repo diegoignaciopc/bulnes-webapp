@@ -1,0 +1,11 @@
+.title-container{
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 0;
+}
+
+.title{
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0
+}
