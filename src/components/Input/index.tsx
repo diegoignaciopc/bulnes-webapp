@@ -2,11 +2,11 @@ import React from 'react'
 import { Input as AntdInput } from 'antd'
 import './styles.css'
 
-interface LabelProps {
+interface InputProps {
   label: string
   text: string
 }
-function Input({ label, text }: LabelProps) {
+function Input({ label, text }: InputProps) {
   return (
     <div className="input-container">
       <label>{label}</label>

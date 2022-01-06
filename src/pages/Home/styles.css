@@ -1,14 +1,29 @@
-.main-container{
-    width: 100vw;
+.home-container {
+    width: 100%;
     height: 100%;
     display: flex;
-    padding: 0 100px;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
+    padding: 20px 40px;
+    justify-content: flex-start;
+    background-color: #FAFAFA;
+}
+.logo-menu{
+    height: 60px;
+
 }
 
-.column-title{
-    border: 1px solid gray;
-    width: 100%;
+.headerTest{
+    background-color: gray;
+    display: flex;
+    align-content: space-between;
+    align-items: center;
+}
+
+.menu-bar{
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    height: 70px;
+    padding: 10px 20px;
+    margin-top: 10px;
 }

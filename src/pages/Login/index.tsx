@@ -16,9 +16,7 @@ function Login() {
           <Input label={'Contraseña'} text={'Contraseña'} />
         </div>
         <br />
-        <Button type="primary" className="button">
-          Iniciar sesión
-        </Button>
+        <Button type="primary">Iniciar sesión</Button>
       </div>
     </div>
   )

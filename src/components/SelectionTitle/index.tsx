@@ -1,16 +1,22 @@
 import React from 'react'
-import { Button } from 'antd'
+
 import './styles.css'
+import Button from './../Button'
 
 interface SecionTitleProps {
   title: string
   buttonTitle?: string
+  buttonAction?: () => void
 }
-function SectionTitle({ title, buttonTitle }: SecionTitleProps) {
+function SectionTitle({ title, buttonTitle, buttonAction }: SecionTitleProps) {
   return (
     <div className="title-container">
       <p className="title">{title}</p>
-      {buttonTitle && <Button type="primary">{buttonTitle}</Button>}
+      {buttonTitle && buttonAction && (
+        <Button type="primary" onClick={buttonAction}>
+          {buttonTitle}
+        </Button>
+      )}
     </div>
   )
 }

@@ -6,13 +6,12 @@ import reportWebVitals from './reportWebVitals'
 import Login from './pages/Login'
 import Home from './pages/Home'
 import Layout from './components/Layout'
-
 interface RequireAuthProps {
   children: ReactElement
   redirectTo: string
 }
 function RequireAuth({ children, redirectTo }: RequireAuthProps) {
-  let isAuthenticated = false
+  let isAuthenticated = true
   return isAuthenticated ? children : <Navigate to={redirectTo} />
 }
 
