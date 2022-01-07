@@ -27,3 +27,12 @@
     padding: 10px 20px;
     margin-top: 10px;
 }
+
+.menu-title{
+    color: black;
+    font-size: 20px;
+}
+
+.menu-layout{
+    min-height: 100vh;
+}

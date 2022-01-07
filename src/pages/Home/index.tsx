@@ -6,22 +6,16 @@ import './styles.css'
 import SectionTitle from './../../components/SelectionTitle'
 import Button from './../../components/Button'
 import Select from './../../components/Select'
-import { columns, data } from './data'
+import { bookingColumns, bookingsListData, parkingSlotsListData } from './data'
 import Input from '../../components/Input'
 
 const { Sider, Content } = Layout
-
-const parkingSlots = [
-  { label: 'B1', value: 1 },
-  { label: 'B2', value: 2 },
-  { label: 'B3', value: 3 },
-  { label: 'B4', value: 4 },
-]
 
 function Home() {
   const [visible, setVisible] = useState(false)
   const showDrawer = () => setVisible(true)
   const onClose = () => setVisible(false)
+
   return (
     <div>
       <Drawer
@@ -39,19 +33,18 @@ function Home() {
           </Space>
         }
       >
-        <Input label="Patente" text="Ingrese placa patente" />
-
+        <Input label="Patente" placeholder="Ingrese placa patente" />
         <Select
-          options={parkingSlots}
+          options={parkingSlotsListData}
           placeholder="Seleccione plaza"
           title="Plaza estacionamiento"
         />
       </Drawer>
-      <Layout style={{ minHeight: '100vh' }}>
+      <Layout className="menu-layout">
         <Sider theme="light">
           <div className="menu-bar">
             <img src={logo} alt="bulnes-logo" className="logo-menu" />
-            <p style={{ color: 'black', fontSize: 20 }}>Parkings</p>
+            <p className="menu-title">Parkings</p>
           </div>
           <Menu theme="light" defaultSelectedKeys={['title1']} mode="inline">
             <Menu.Item key="title1">Disponibilidad</Menu.Item>
@@ -71,7 +64,11 @@ function Home() {
                   buttonTitle="Reservar"
                   buttonAction={showDrawer}
                 />
-                <Table columns={columns} dataSource={data} pagination={false} />
+                <Table
+                  columns={bookingColumns}
+                  dataSource={bookingsListData}
+                  pagination={false}
+                />
               </div>
               <div className="column-title">
                 <SectionTitle title="Indicadores" />
