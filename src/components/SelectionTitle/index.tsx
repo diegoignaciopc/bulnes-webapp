@@ -11,7 +11,7 @@ interface SecionTitleProps {
 function SectionTitle({ title, buttonTitle, buttonAction }: SecionTitleProps) {
   return (
     <div className="title-container">
-      <p className="title">{title}</p>
+      <p className="title-size">{title}</p>
       {buttonTitle && buttonAction && (
         <Button type="primary" onClick={buttonAction}>
           {buttonTitle}

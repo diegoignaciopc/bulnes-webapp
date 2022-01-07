@@ -3,7 +3,7 @@ import { Button as AntdButton, ButtonProps } from 'antd'
 
 function Button({ children, ...restProps }: ButtonProps) {
   return (
-    <AntdButton {...restProps} style={{ borderRadius: 6 }}>
+    <AntdButton {...restProps} className="button-radius">
       {children}
     </AntdButton>
   )

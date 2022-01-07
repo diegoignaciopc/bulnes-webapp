@@ -1,16 +1,15 @@
 import React from 'react'
-import { Input as AntdInput } from 'antd'
+import { Input as AntdInput, InputProps as AntdInputProps } from 'antd'
 import './styles.css'
 
-interface InputProps {
+interface InputProps extends AntdInputProps {
   label: string
-  text: string
 }
-function Input({ label, text }: InputProps) {
+function Input({ label, ...restProps }: InputProps) {
   return (
     <div className="input-container">
       <label>{label}</label>
-      <AntdInput placeholder={text} />
+      <AntdInput {...restProps} />
     </div>
   )
 }
