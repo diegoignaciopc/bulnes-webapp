@@ -60,14 +60,7 @@ export const bookingsListData = [
   },
 ]
 
-export const parkingSlotsListData = [
-  { label: 'B1', value: 1 },
-  { label: 'B2', value: 2 },
-  { label: 'B3', value: 3 },
-  { label: 'B4', value: 4 },
-]
-
-export const parkingSlotsDemo = [
+export const parkingSlotsData = [
   { id: '1', name: 'A01', status: 'available' },
   { id: '2', name: 'A02', status: 'unavailable' },
   { id: '3', name: 'A03', status: 'unavailable' },
@@ -89,8 +82,15 @@ export const parkingSlotsDemo = [
   { id: '19', name: 'A19', status: 'available' },
   { id: '20', name: 'A20', status: 'available' },
   { id: '21', name: 'A21', status: 'available' },
-  { id: '22', name: 'A1', status: 'available' },
-  { id: '23', name: 'A1', status: 'available' },
-  { id: '24', name: 'A1', status: 'available' },
-  { id: '25', name: 'A1', status: 'available' },
+  { id: '22', name: 'A22', status: 'available' },
+  { id: '23', name: 'A23', status: 'available' },
+  { id: '24', name: 'A24', status: 'available' },
+  { id: '25', name: 'A25', status: 'available' },
 ]
+
+export const parkingSlotsListData = parkingSlotsData
+  .filter((parkingSlot) => parkingSlot.status === 'available')
+  .map((parkingSlot) => ({
+    label: parkingSlot.name,
+    value: parkingSlot.id,
+  }))
