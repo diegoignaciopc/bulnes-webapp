@@ -1,4 +1,4 @@
-import { Layout, Table } from 'antd'
+import { Layout, Table, Popconfirm, message } from 'antd'
 import React, { useState } from 'react'
 import carImage from '../../images/bulnes-car.png'
 import './styles.css'
@@ -12,6 +12,16 @@ function Home() {
   const [visible, setVisible] = useState(false)
   const showDrawer = () => setVisible(true)
   const onClose = () => setVisible(false)
+
+  function confirm(e: any) {
+    console.log(e)
+    message.success('Click on Yes')
+  }
+
+  function cancel(e: any) {
+    console.log(e)
+    message.error('Click on No')
+  }
 
   const handleParkingSlotClick = (status: string) => {
     if (status === 'available') setVisible(true)
@@ -43,27 +53,62 @@ function Home() {
                     flexWrap: 'wrap',
                   }}
                 >
-                  {data.parkingSlotsData.map((parkingSlot, i) => (
-                    <div
-                      style={{
-                        color:
-                          parkingSlot.status === 'available' ? 'green' : 'red',
-                        backgroundColor: 'white',
-                        borderRadius: 50,
-                        padding: 20,
-                        fontSize: 18,
-                      }}
-                      key={i}
-                      onClick={() => handleParkingSlotClick(parkingSlot.status)}
-                    >
-                      <img
-                        src={carImage}
-                        alt="bulnes-logo"
-                        style={{ height: 60, paddingRight: 5 }}
-                      />
-                      {parkingSlot.name}
-                    </div>
-                  ))}
+                  {data.parkingSlotsData.map((parkingSlot, i) => {
+                    if (parkingSlot.status === 'unavailable') {
+                      return (
+                        <Popconfirm
+                          title="¿Seguro que desea Finalizar la reservación?"
+                          onConfirm={confirm}
+                          onCancel={cancel}
+                          okText="Si, finalizar"
+                          cancelText="No, esperar"
+                        >
+                          <div
+                            style={{
+                              color: 'red',
+                              backgroundColor: 'white',
+                              borderRadius: 50,
+                              padding: 20,
+                              fontSize: 18,
+                            }}
+                            key={i}
+                            onClick={() =>
+                              handleParkingSlotClick(parkingSlot.status)
+                            }
+                          >
+                            <img
+                              src={carImage}
+                              alt="bulnes-logo"
+                              style={{ height: 60, paddingRight: 5 }}
+                            />
+                            {parkingSlot.name}
+                          </div>
+                        </Popconfirm>
+                      )
+                    }
+                    return (
+                      <div
+                        style={{
+                          color: 'green',
+                          backgroundColor: 'white',
+                          borderRadius: 50,
+                          padding: 20,
+                          fontSize: 18,
+                        }}
+                        key={i}
+                        onClick={() =>
+                          handleParkingSlotClick(parkingSlot.status)
+                        }
+                      >
+                        <img
+                          src={carImage}
+                          alt="bulnes-logo"
+                          style={{ height: 60, paddingRight: 5 }}
+                        />
+                        {parkingSlot.name}
+                      </div>
+                    )
+                  })}
                 </div>
               </div>
               <div id="section2">
