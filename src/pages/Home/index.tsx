@@ -18,7 +18,7 @@ function Home() {
   }
 
   return (
-    <div>
+    <div style={{ marginLeft: 200 }}>
       <Drawer
         visible={visible}
         onClose={onClose}
@@ -29,7 +29,7 @@ function Home() {
         <Layout>
           <Content>
             <div className="home-container">
-              <div className="column-title">
+              <div id="section1">
                 <SectionTitle title="Disponibilidad" />
                 <div>
                   <p>Disponible</p>
@@ -66,7 +66,7 @@ function Home() {
                   ))}
                 </div>
               </div>
-              <div className="column-title">
+              <div id="section2">
                 <SectionTitle
                   title="Reservaciones"
                   buttonTitle="Nueva reservación"
@@ -78,7 +78,7 @@ function Home() {
                   pagination={false}
                 />
               </div>
-              <div className="graphic-container">
+              <div id="section3" className="graphic-container">
                 <SectionTitle title="Indicadores" />
                 <div className="legend">
                   <div className="legend-aviable" />
