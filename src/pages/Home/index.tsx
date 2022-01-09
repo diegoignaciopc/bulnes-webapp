@@ -1,12 +1,19 @@
 import { Layout, Menu, Table, Drawer, Space } from 'antd'
 import React, { useState } from 'react'
 import logo from '../../images/bulnesLogo.png'
+import carImage from '../../images/bulnes-car.png'
 import './styles.css'
 
 import SectionTitle from './../../components/SelectionTitle'
 import Button from './../../components/Button'
 import Select from './../../components/Select'
-import { columns, parkingsListData, parkingSlotsListData } from './data'
+
+import {
+  bookingColumns,
+  bookingsListData,
+  parkingSlotsData,
+  parkingSlotsListData,
+} from './data'
 import Input from '../../components/Input'
 
 const { Sider, Content } = Layout
@@ -15,6 +22,10 @@ function Home() {
   const [visible, setVisible] = useState(false)
   const showDrawer = () => setVisible(true)
   const onClose = () => setVisible(false)
+
+  const handleParkingSlotClick = (status: string) => {
+    if (status === 'available') setVisible(true)
+  }
 
   return (
     <div>
@@ -57,6 +68,40 @@ function Home() {
             <div className="home-container">
               <div className="column-title">
                 <SectionTitle title="Disponibilidad" />
+                <div>
+                  <p>Disponible</p>
+                  <p>No disponible</p>
+                </div>
+                <div
+                  style={{
+                    width: '100%',
+                    backgroundColor: 'white',
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                  }}
+                >
+                  {parkingSlotsData.map((parkingSlot, i) => (
+                    <div
+                      style={{
+                        color:
+                          parkingSlot.status === 'available' ? 'green' : 'red',
+                        backgroundColor: 'white',
+                        borderRadius: 50,
+                        padding: 20,
+                        fontSize: 18,
+                      }}
+                      key={i}
+                      onClick={() => handleParkingSlotClick(parkingSlot.status)}
+                    >
+                      <img
+                        src={carImage}
+                        alt="bulnes-logo"
+                        style={{ height: 60, paddingRight: 5 }}
+                      />
+                      {parkingSlot.name}
+                    </div>
+                  ))}
+                </div>
               </div>
               <div className="column-title">
                 <SectionTitle
@@ -65,8 +110,8 @@ function Home() {
                   buttonAction={showDrawer}
                 />
                 <Table
-                  columns={columns}
-                  dataSource={parkingsListData}
+                  columns={bookingColumns}
+                  dataSource={bookingsListData}
                   pagination={false}
                 />
               </div>
