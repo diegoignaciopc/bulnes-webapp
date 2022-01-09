@@ -1,7 +1,6 @@
 import React from 'react'
 import logo from '../../images/bulnesLogo.png'
-import Input from '../../components/Input'
-import Button from '../../components/Button'
+import { Button, Input } from '../../components'
 import './styles.css'
 
 function Login() {

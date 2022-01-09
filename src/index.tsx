@@ -1,19 +1,10 @@
-import React, { ReactElement } from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom'
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-import './index.css'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { Home, Login } from './pages'
+import { RequireAuth, Layout } from './components'
 import reportWebVitals from './reportWebVitals'
-import Login from './pages/Login'
-import Home from './pages/Home'
-import Layout from './components/Layout'
-interface RequireAuthProps {
-  children: ReactElement
-  redirectTo: string
-}
-function RequireAuth({ children, redirectTo }: RequireAuthProps) {
-  let isAuthenticated = true
-  return isAuthenticated ? children : <Navigate to={redirectTo} />
-}
+import './index.css'
 
 ReactDOM.render(
   <BrowserRouter>

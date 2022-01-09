@@ -1,9 +1,10 @@
 import React from 'react'
-import { Drawer as AntdDrawer, Space, DrawerProps } from 'antd'
-import Button from '../Button'
-import Input from '../Input'
-import Select from '../Select'
-import { parkingSlotsListData } from '../../pages/Home/data'
+import {
+  Drawer as AntdDrawer,
+  Space,
+  DrawerProps as AntdDrawerProps,
+} from 'antd'
+import { Button, Input, Select } from './../'
 
 const Extra = ({ onClose }: any) => {
   return (
@@ -16,7 +17,10 @@ const Extra = ({ onClose }: any) => {
   )
 }
 
-function Drawer({ visible, onClose }: DrawerProps) {
+interface DrawerProps extends AntdDrawerProps {
+  parkingSlotsListData: any
+}
+function Drawer({ visible, onClose, parkingSlotsListData }: DrawerProps) {
   return (
     <AntdDrawer
       title="Reservar"

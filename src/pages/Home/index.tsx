@@ -3,17 +3,8 @@ import React, { useState } from 'react'
 import carImage from '../../images/bulnes-car.png'
 import './styles.css'
 
-import Graphic from '../../components/PieChart/index'
-import SectionTitle from './../../components/SelectionTitle'
-
-import {
-  bookingColumns,
-  bookingsListData,
-  parkingSlotsData,
-  pieChartData,
-} from './data'
-import Drawer from '../../components/Drawer'
-import Sider from '../../components/Sider'
+import { PieChart, SectionTitle, Drawer, Sider } from '../../components'
+import * as data from './data'
 
 const { Content } = Layout
 
@@ -28,7 +19,11 @@ function Home() {
 
   return (
     <div>
-      <Drawer visible={visible} onClose={onClose} />
+      <Drawer
+        visible={visible}
+        onClose={onClose}
+        parkingSlotsListData={data.parkingSlotsListData}
+      />
       <Layout className="menu-layout">
         <Sider />
         <Layout>
@@ -48,7 +43,7 @@ function Home() {
                     flexWrap: 'wrap',
                   }}
                 >
-                  {parkingSlotsData.map((parkingSlot, i) => (
+                  {data.parkingSlotsData.map((parkingSlot, i) => (
                     <div
                       style={{
                         color:
@@ -78,12 +73,12 @@ function Home() {
                   buttonAction={showDrawer}
                 />
                 <Table
-                  columns={bookingColumns}
-                  dataSource={bookingsListData}
+                  columns={data.bookingColumns}
+                  dataSource={data.bookingsListData}
                   pagination={false}
                 />
               </div>
-              <div className="column-title, graphic-container">
+              <div className="graphic-container">
                 <SectionTitle title="Indicadores" />
                 <div className="legend">
                   <div className="legend-aviable" />
@@ -91,7 +86,7 @@ function Home() {
                   <div className="legend-unaviable" />
                   <div>Ocupado</div>
                 </div>
-                <Graphic data={pieChartData} />
+                <PieChart data={data.pieChartData} />
               </div>
             </div>
           </Content>
