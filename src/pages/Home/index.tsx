@@ -1,22 +1,21 @@
-import { Layout, Menu, Table, Drawer, Space } from 'antd'
+import { Layout, Table } from 'antd'
 import React, { useState } from 'react'
-import logo from '../../images/bulnesLogo.png'
 import carImage from '../../images/bulnes-car.png'
 import './styles.css'
 
+import Graphic from '../../components/PieChart/index'
 import SectionTitle from './../../components/SelectionTitle'
-import Button from './../../components/Button'
-import Select from './../../components/Select'
 
 import {
   bookingColumns,
   bookingsListData,
   parkingSlotsData,
-  parkingSlotsListData,
+  pieChartData,
 } from './data'
-import Input from '../../components/Input'
+import Drawer from '../../components/Drawer'
+import Sider from '../../components/Sider'
 
-const { Sider, Content } = Layout
+const { Content } = Layout
 
 function Home() {
   const [visible, setVisible] = useState(false)
@@ -29,40 +28,9 @@ function Home() {
 
   return (
     <div>
-      <Drawer
-        title="Reservar"
-        placement="right"
-        onClose={onClose}
-        width={400}
-        visible={visible}
-        extra={
-          <Space>
-            <Button onClick={onClose}>Cancelar</Button>
-            <Button type="primary" onClick={() => null}>
-              Guardar
-            </Button>
-          </Space>
-        }
-      >
-        <Input label="Patente" placeholder="Ingrese placa patente" />
-        <Select
-          options={parkingSlotsListData}
-          placeholder="Seleccione plaza"
-          title="Plaza estacionamiento"
-        />
-      </Drawer>
+      <Drawer visible={visible} onClose={onClose} />
       <Layout className="menu-layout">
-        <Sider theme="light">
-          <div className="menu-bar">
-            <img src={logo} alt="bulnes-logo" className="logo-menu" />
-            <p className="menu-title">Parkings</p>
-          </div>
-          <Menu theme="light" defaultSelectedKeys={['title1']} mode="inline">
-            <Menu.Item key="title1">Disponibilidad</Menu.Item>
-            <Menu.Item key="title2">Reservaciones</Menu.Item>
-            <Menu.Item key="title3">Indicadores</Menu.Item>
-          </Menu>
-        </Sider>
+        <Sider />
         <Layout>
           <Content>
             <div className="home-container">
@@ -106,7 +74,7 @@ function Home() {
               <div className="column-title">
                 <SectionTitle
                   title="Reservaciones"
-                  buttonTitle="Reservar"
+                  buttonTitle="Nueva reservación"
                   buttonAction={showDrawer}
                 />
                 <Table
@@ -115,8 +83,15 @@ function Home() {
                   pagination={false}
                 />
               </div>
-              <div className="column-title">
+              <div className="column-title, graphic-container">
                 <SectionTitle title="Indicadores" />
+                <div className="legend">
+                  <div className="legend-aviable" />
+                  <div>Disponible</div>
+                  <div className="legend-unaviable" />
+                  <div>Ocupado</div>
+                </div>
+                <Graphic data={pieChartData} />
               </div>
             </div>
           </Content>

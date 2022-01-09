@@ -94,3 +94,8 @@ export const parkingSlotsListData = parkingSlotsData
     label: parkingSlot.name,
     value: parkingSlot.id,
   }))
+
+export const pieChartData = [
+  { name: 'Group A', value: 400 },
+  { name: 'Group B', value: 600 },
+]

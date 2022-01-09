@@ -1,5 +1,6 @@
 import React from 'react'
 import { Button as AntdButton, ButtonProps } from 'antd'
+import './styles.css'
 
 function Button({ children, ...restProps }: ButtonProps) {
   return (

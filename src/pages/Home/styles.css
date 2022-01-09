@@ -36,3 +36,35 @@
 .menu-layout{
     min-height: 100vh;
 }
+
+.graphic-container{
+    display: flex;
+    flex-direction: column;
+}
+
+.legend{
+    display: flex;
+    justify-content: center;
+    border: 2px solid red;
+}
+.legend-title{
+    border: 2px solid black;
+    text-align: center;
+    margin: 10px;
+    font-size: 20px;
+}
+.legend-aviable{
+    border: 1px solid black;
+    border-radius: 50px;
+    background-color: #01B9A0;
+    padding: 5px;
+    margin: 5px;
+
+}
+.legend-unaviable{
+    border: 1px solid black;
+    border-radius: 50px;
+    background-color: #2473E1;
+    padding: 5px;
+    margin: 5px;
+}
