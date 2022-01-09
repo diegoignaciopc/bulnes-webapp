@@ -2,7 +2,7 @@ import React from 'react'
 import './styles.css'
 import { PieChart as RCPieChart, Pie, Cell } from 'recharts'
 
-const COLORS = ['#01B9A0', '#2473E1']
+const COLORS = ['#22c55e', '#f43f5e']
 
 const RADIAN = Math.PI / 180
 const renderCustomizedLabel = ({

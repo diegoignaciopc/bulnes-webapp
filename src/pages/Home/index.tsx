@@ -41,9 +41,35 @@ function Home() {
             <div className="home-container">
               <div id="section1">
                 <SectionTitle title="Disponibilidad" />
-                <div>
-                  <p>Disponible</p>
-                  <p>No disponible</p>
+                <div style={{ display: 'flex', marginBottom: 10 }}>
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      marginRight: 10,
+                    }}
+                  >
+                    <div
+                      style={{
+                        height: 10,
+                        width: 10,
+                        borderRadius: 50,
+                        backgroundColor: 'green',
+                      }}
+                    />
+                    <p style={{ margin: 0, paddingLeft: 8 }}>Disponible</p>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <div
+                      style={{
+                        height: 10,
+                        width: 10,
+                        borderRadius: 50,
+                        backgroundColor: 'red',
+                      }}
+                    />
+                    <p style={{ margin: 0, paddingLeft: 8 }}>No disponible</p>
+                  </div>
                 </div>
                 <div
                   style={{
@@ -51,6 +77,7 @@ function Home() {
                     backgroundColor: 'white',
                     display: 'flex',
                     flexWrap: 'wrap',
+                    padding: '30px 0',
                   }}
                 >
                   {data.parkingSlotsData.map((parkingSlot, i) => {
@@ -117,11 +144,20 @@ function Home() {
                   buttonTitle="Nueva reservación"
                   buttonAction={showDrawer}
                 />
-                <Table
-                  columns={data.bookingColumns}
-                  dataSource={data.bookingsListData}
-                  pagination={false}
-                />
+                <div
+                  style={{
+                    width: '100%',
+                    backgroundColor: 'white',
+                    padding: '30px',
+                  }}
+                >
+                  <Table
+                    bordered
+                    columns={data.bookingColumns}
+                    dataSource={data.bookingsListData}
+                    pagination={false}
+                  />
+                </div>
               </div>
               <div id="section3" className="graphic-container">
                 <SectionTitle title="Indicadores" />

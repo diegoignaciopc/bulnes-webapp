@@ -85,7 +85,7 @@ export const parkingSlotsData = [
   { id: '22', name: 'A22', status: 'available' },
   { id: '23', name: 'A23', status: 'available' },
   { id: '24', name: 'A24', status: 'available' },
-  { id: '25', name: 'A25', status: 'available' },
+  { id: '25', name: 'A25', status: 'unavailable' },
 ]
 
 export const parkingSlotsListData = parkingSlotsData
@@ -96,6 +96,12 @@ export const parkingSlotsListData = parkingSlotsData
   }))
 
 export const pieChartData = [
-  { name: 'Group A', value: 400 },
-  { name: 'Group B', value: 600 },
+  {
+    name: 'Available',
+    value: parkingSlotsListData.length,
+  },
+  {
+    name: 'Unavailable',
+    value: parkingSlotsData.length - parkingSlotsListData.length,
+  },
 ]
