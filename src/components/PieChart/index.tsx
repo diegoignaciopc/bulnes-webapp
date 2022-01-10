@@ -35,11 +35,11 @@ interface PieChartProps {
 }
 const PieChart = ({ data }: PieChartProps) => {
   return (
-    <RCPieChart width={400} height={400}>
+    <RCPieChart width={200} height={200}>
       <Pie
         data={data}
-        cx={200}
-        cy={200}
+        cx={100}
+        cy={100}
         labelLine={false}
         label={renderCustomizedLabel}
         outerRadius={80}

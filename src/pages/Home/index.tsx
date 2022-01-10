@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import carImage from '../../images/bulnes-car.png'
 import './styles.css'
 
-import { PieChart, SectionTitle, Drawer, Sider } from '../../components'
+import { SectionTitle, Drawer, Sider, ChartCard } from '../../components'
 import * as data from './data'
 
 const { Content } = Layout
@@ -16,11 +16,6 @@ function Home() {
   function confirm(e: any) {
     console.log(e)
     message.success('Click on Yes')
-  }
-
-  function cancel(e: any) {
-    console.log(e)
-    message.error('Click on No')
   }
 
   const handleParkingSlotClick = (status: string) => {
@@ -41,7 +36,7 @@ function Home() {
             <div className="home-container">
               <div id="section1">
                 <SectionTitle title="Disponibilidad" />
-                <div style={{ display: 'flex', marginBottom: 10 }}>
+                <div className="availability-legend-container">
                   <div
                     style={{
                       display: 'flex',
@@ -49,55 +44,27 @@ function Home() {
                       marginRight: 10,
                     }}
                   >
-                    <div
-                      style={{
-                        height: 10,
-                        width: 10,
-                        borderRadius: 50,
-                        backgroundColor: 'green',
-                      }}
-                    />
-                    <p style={{ margin: 0, paddingLeft: 8 }}>Disponible</p>
+                    <div className="availability-dot-available" />
+                    <p className="availability-legend-label">Disponible</p>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <div
-                      style={{
-                        height: 10,
-                        width: 10,
-                        borderRadius: 50,
-                        backgroundColor: 'red',
-                      }}
-                    />
-                    <p style={{ margin: 0, paddingLeft: 8 }}>No disponible</p>
+                    <div className="availability-dot-unavailable" />
+                    <p className="availability-legend-label">No disponible</p>
                   </div>
                 </div>
-                <div
-                  style={{
-                    width: '100%',
-                    backgroundColor: 'white',
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    padding: '30px 0',
-                  }}
-                >
+                <div className="parking-slots-container">
                   {data.parkingSlotsData.map((parkingSlot, i) => {
                     if (parkingSlot.status === 'unavailable') {
                       return (
                         <Popconfirm
                           title="¿Seguro que desea Finalizar la reservación?"
                           onConfirm={confirm}
-                          onCancel={cancel}
+                          onCancel={() => null}
                           okText="Si, finalizar"
                           cancelText="No, esperar"
                         >
                           <div
-                            style={{
-                              color: 'red',
-                              backgroundColor: 'white',
-                              borderRadius: 50,
-                              padding: 20,
-                              fontSize: 18,
-                            }}
+                            className="parking-icon-unavailable"
                             key={i}
                             onClick={() =>
                               handleParkingSlotClick(parkingSlot.status)
@@ -115,13 +82,7 @@ function Home() {
                     }
                     return (
                       <div
-                        style={{
-                          color: 'green',
-                          backgroundColor: 'white',
-                          borderRadius: 50,
-                          padding: 20,
-                          fontSize: 18,
-                        }}
+                        className="parking-icon-available"
                         key={i}
                         onClick={() =>
                           handleParkingSlotClick(parkingSlot.status)
@@ -144,13 +105,7 @@ function Home() {
                   buttonTitle="Nueva reservación"
                   buttonAction={showDrawer}
                 />
-                <div
-                  style={{
-                    width: '100%',
-                    backgroundColor: 'white',
-                    padding: '30px',
-                  }}
-                >
+                <div className="bookings-container">
                   <Table
                     bordered
                     columns={data.bookingColumns}
@@ -159,15 +114,12 @@ function Home() {
                   />
                 </div>
               </div>
-              <div id="section3" className="graphic-container">
+              <div id="section3">
                 <SectionTitle title="Indicadores" />
-                <div className="legend">
-                  <div className="legend-aviable" />
-                  <div>Disponible</div>
-                  <div className="legend-unaviable" />
-                  <div>Ocupado</div>
+                <div className="charts-container">
+                  <ChartCard />
+                  <ChartCard />
                 </div>
-                <PieChart data={data.pieChartData} />
               </div>
             </div>
           </Content>
