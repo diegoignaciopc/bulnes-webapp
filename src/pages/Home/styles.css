@@ -1,0 +1,106 @@
+.home-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 40px;
+    justify-content: flex-start;
+    background-color: #FAFAFA;
+}
+.logo-menu{
+    height: 60px;
+
+}
+
+.headerTest{
+    background-color: gray;
+    display: flex;
+    align-content: space-between;
+    align-items: center;
+}
+
+.menu-bar{
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    height: 70px;
+    padding: 10px 20px;
+    margin-top: 10px;
+}
+
+.menu-title {
+    color: black;
+    font-size: 20px;
+}
+
+.menu-layout {
+    min-height: 100vh;
+}
+
+.availability-legend-container {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.availability-legend-label {
+    margin: 0;
+    padding-left: 8px;
+}
+
+.availability-dot-available {
+    height: 10px;
+    width: 10px;
+    border-radius: 50px;
+    background-color: #21C55D;
+}
+
+.availability-dot-unavailable {
+    height: 10px;
+    width: 10px;
+    border-radius: 50px;
+    background-color: #F43F5E;
+}
+
+.bookings-container {
+    width: 100%;
+    background-color: white;
+    padding: 30px;
+    box-shadow: rgb(0 0 0 / 10%) 0 4px 8px 0
+}
+
+.parking-slots-container {
+    box-shadow: rgb(0 0 0 / 10%) 0 4px 8px 0;
+    width: 100%;
+    background-color: white;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 30px 0;
+}
+
+.parking-icon-available {
+    color: #21C55D;
+    background-color: white;
+    border-radius: 50px;
+    padding: 20px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.parking-icon-unavailable {
+    cursor: pointer;
+    color: #F43F5E;
+    background-color: white;
+    border-radius: 50px;
+    padding: 20px;
+    font-size: 18px;
+}
+
+.parking-image {
+    height: 60px;
+    padding-right: 5px;
+}
+
+.charts-container {
+    display: flex;
+    justify-content: space-between;
+}

@@ -1,0 +1,20 @@
+.login-main-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #99b6de;
+}
+
+.login-form-container{
+    padding: 120px 180px;
+    border-radius: 15px;
+    background-color: white;
+    text-align: center;
+}
+
+.login-logo{
+    height: 150px;
+    margin-bottom: 25px;
+}
