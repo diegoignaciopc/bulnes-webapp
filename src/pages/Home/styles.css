@@ -51,14 +51,14 @@
     height: 10px;
     width: 10px;
     border-radius: 50px;
-    background-color: green;
+    background-color: #21C55D;
 }
 
 .availability-dot-unavailable {
     height: 10px;
     width: 10px;
     border-radius: 50px;
-    background-color: red;
+    background-color: #F43F5E;
 }
 
 .bookings-container {
@@ -78,7 +78,7 @@
 }
 
 .parking-icon-available {
-    color: green;
+    color: #21C55D;
     background-color: white;
     border-radius: 50px;
     padding: 20px;
@@ -86,7 +86,7 @@
 }
 
 .parking-icon-unavailable {
-    color: red;
+    color: #F43F5E;
     background-color: white;
     border-radius: 50px;
     padding: 20px;

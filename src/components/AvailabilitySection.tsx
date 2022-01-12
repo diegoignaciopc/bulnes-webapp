@@ -28,7 +28,7 @@ function AvailabilitySection({
         {parkingSlotsData.map((parkingSlot: any, i: number) => (
           <div
             style={{
-              color: parkingSlot.status === 'available' ? 'green' : 'red',
+              color: parkingSlot.status === 'available' ? '#21C55D' : '#F43F5E',
               backgroundColor: 'white',
               borderRadius: 50,
               padding: 20,
