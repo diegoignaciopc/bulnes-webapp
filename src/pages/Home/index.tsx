@@ -5,6 +5,7 @@ import './styles.css'
 
 import { SectionTitle, Drawer, Sider, ChartCard } from '../../components'
 import * as data from './data'
+import { useAuth } from '../../contexts/Auth'
 
 const { Content } = Layout
 
@@ -12,6 +13,11 @@ function Home() {
   const [visible, setVisible] = useState(false)
   const showDrawer = () => setVisible(true)
   const onClose = () => setVisible(false)
+
+  const {
+    state: { name },
+    signOut,
+  } = useAuth()
 
   function confirm(e: any) {
     console.log(e)
@@ -34,7 +40,22 @@ function Home() {
         <Layout>
           <Content>
             <div className="home-container">
-              <div id="section1">
+              <div style={{ alignSelf: 'self-end', display: 'flex', flexDirection: 'column' }}>
+                <div style={{ fontSize: 18, fontWeight: 'bold' }}>Bienvenido, {name} 👋🏼</div>
+                <div
+                  style={{
+                    fontSize: 12,
+                    fontWeight: 'bold',
+                    color: '#40A9FF',
+                    cursor: 'pointer',
+                    alignSelf: 'self-end',
+                  }}
+                  onClick={signOut}
+                >
+                  Cerrar sesión
+                </div>
+              </div>
+              <div id="disponibilidad">
                 <SectionTitle title="Disponibilidad" />
                 <div className="availability-legend-container">
                   <div
@@ -66,9 +87,7 @@ function Home() {
                           <div
                             className="parking-icon-unavailable"
                             key={i}
-                            onClick={() =>
-                              handleParkingSlotClick(parkingSlot.status)
-                            }
+                            onClick={() => handleParkingSlotClick(parkingSlot.status)}
                           >
                             <img
                               src={carImage}
@@ -84,9 +103,7 @@ function Home() {
                       <div
                         className="parking-icon-available"
                         key={i}
-                        onClick={() =>
-                          handleParkingSlotClick(parkingSlot.status)
-                        }
+                        onClick={() => handleParkingSlotClick(parkingSlot.status)}
                       >
                         <img
                           src={carImage}
@@ -99,7 +116,7 @@ function Home() {
                   })}
                 </div>
               </div>
-              <div id="section2">
+              <div id="reservaciones">
                 <SectionTitle
                   title="Reservaciones"
                   buttonTitle="Nueva reservación"
@@ -114,7 +131,7 @@ function Home() {
                   />
                 </div>
               </div>
-              <div id="section3">
+              <div id="indicadores">
                 <SectionTitle title="Indicadores" />
                 <div className="charts-container">
                   <ChartCard />

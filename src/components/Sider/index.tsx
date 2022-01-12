@@ -21,13 +21,13 @@ function Sider() {
       </div>
       <Menu theme="light" defaultSelectedKeys={['title1']} mode="inline">
         <Menu.Item key="title1">
-          <Link to="#section1">Disponibilidad</Link>
+          <Link to="#disponibilidad">Disponibilidad</Link>
         </Menu.Item>
         <Menu.Item key="title2">
-          <Link to="#section2">Reservaciones</Link>
+          <Link to="#reservaciones">Reservaciones</Link>
         </Menu.Item>
         <Menu.Item key="title3">
-          <Link to="#section3">Indicadores</Link>
+          <Link to="#indicadores">Indicadores</Link>
         </Menu.Item>
       </Menu>
     </Sider>
