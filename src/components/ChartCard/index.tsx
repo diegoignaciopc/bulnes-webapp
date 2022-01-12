@@ -1,25 +1,31 @@
 import React from 'react'
 import './styles.css'
 import { PieChart } from '../index'
-import * as data from '../../pages/Home/data'
 
-function ChartCard() {
+interface LegendValue {
+  dotClassName: string
+  value: string
+}
+interface ChartCardProps {
+  data: any
+  title: string
+  values: LegendValue[]
+}
+function ChartCard({ data, title, values }: ChartCardProps) {
   return (
     <div className="chart-card-container">
       <div className="chart-card">
         <div className="chart-container">
-          <PieChart data={data.pieChartData} />
+          <PieChart data={data} />
         </div>
         <div className="legend-container">
-          <div className="legend-title">Niveles de ocupación de plazas</div>
-          <div className="legend-label">
-            <div className="dot-available" />
-            <p>Disponible</p>
-          </div>
-          <div className="legend-label">
-            <div className="dot-unavailable" />
-            <p>No disponible</p>
-          </div>
+          <div className="legend-title">{title}</div>
+          {values.map((item) => (
+            <div className="legend-label">
+              <div className={item.dotClassName} />
+              <p>{item.value}</p>
+            </div>
+          ))}
         </div>
       </div>
     </div>

@@ -88,20 +88,22 @@ export const parkingSlotsData = [
   { id: '25', name: 'A25', status: 'unavailable' },
 ]
 
-export const parkingSlotsListData = parkingSlotsData
-  .filter((parkingSlot) => parkingSlot.status === 'available')
-  .map((parkingSlot) => ({
-    label: parkingSlot.name,
-    value: parkingSlot.id,
-  }))
+export const getAvailableParkingSlotsOptions = (parkingSlotsData: any[]) => {
+  return parkingSlotsData
+    .filter((parkingSlot) => parkingSlot.status === 'available')
+    .map((parkingSlot) => ({
+      label: parkingSlot.name,
+      value: parkingSlot.id,
+    }))
+}
 
 export const pieChartData = [
   {
     name: 'Available',
-    value: parkingSlotsListData.length,
+    value: 20, // parkingSlotsListData.length,
   },
   {
     name: 'Unavailable',
-    value: parkingSlotsData.length - parkingSlotsListData.length,
+    value: 30, // parkingSlotsData.length - parkingSlotsListData.length,
   },
 ]

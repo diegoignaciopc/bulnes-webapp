@@ -1,11 +1,14 @@
-import { Layout, Table, Popconfirm, message } from 'antd'
-import React, { useState } from 'react'
+import { Layout, Table, Popconfirm, message, Spin } from 'antd'
+import React, { useEffect, useState } from 'react'
 import carImage from '../../images/bulnes-car.png'
 import './styles.css'
 
 import { SectionTitle, Drawer, Sider, ChartCard } from '../../components'
 import * as data from './data'
 import { useAuth } from '../../contexts/Auth'
+import { useParking } from '../../contexts/Parking'
+import { getAvailableParkingSlotsOptions } from './data'
+import { finishBooking } from '../../services/Parking'
 
 const { Content } = Layout
 
@@ -19,9 +22,29 @@ function Home() {
     signOut,
   } = useAuth()
 
-  function confirm(e: any) {
-    console.log(e)
-    message.success('Click on Yes')
+  const {
+    getParkingSlots,
+    getBookings,
+    state: { bookings, parkingSlots, isLoadingBookings },
+  } = useParking()
+
+  useEffect(() => {
+    const init = async () => {
+      await getBookings()
+      await getParkingSlots()
+    }
+    init()
+  }, [])
+
+  const confirm = async (bookingReference: string) => {
+    try {
+      await finishBooking({ bookingId: bookingReference })
+      message.success('Reservación finalizada exitosamente')
+      await getBookings()
+      await getParkingSlots()
+    } catch (e) {
+      message.error('Error al finalizar reservación: ' + bookingReference)
+    }
   }
 
   const handleParkingSlotClick = (status: string) => {
@@ -33,7 +56,7 @@ function Home() {
       <Drawer
         visible={visible}
         onClose={onClose}
-        parkingSlotsListData={data.parkingSlotsListData}
+        parkingSlotsListData={getAvailableParkingSlotsOptions(parkingSlots)}
       />
       <Layout className="menu-layout">
         <Sider />
@@ -74,12 +97,12 @@ function Home() {
                   </div>
                 </div>
                 <div className="parking-slots-container">
-                  {data.parkingSlotsData.map((parkingSlot, i) => {
+                  {parkingSlots.map((parkingSlot, i) => {
                     if (parkingSlot.status === 'unavailable') {
                       return (
                         <Popconfirm
                           title="¿Seguro que desea Finalizar la reservación?"
-                          onConfirm={confirm}
+                          onConfirm={() => confirm(parkingSlot.bookingReference)}
                           onCancel={() => null}
                           okText="Si, finalizar"
                           cancelText="No, esperar"
@@ -124,9 +147,11 @@ function Home() {
                 />
                 <div className="bookings-container">
                   <Table
+                    title={() => 'Valor por minuto de reservación de plazas: CLP $15 💰'}
+                    loading={isLoadingBookings}
                     bordered
                     columns={data.bookingColumns}
-                    dataSource={data.bookingsListData}
+                    dataSource={bookings}
                     pagination={false}
                   />
                 </div>
@@ -134,8 +159,22 @@ function Home() {
               <div id="indicadores">
                 <SectionTitle title="Indicadores" />
                 <div className="charts-container">
-                  <ChartCard />
-                  <ChartCard />
+                  <ChartCard
+                    data={data.pieChartData}
+                    title="Niveles de ocupación de plazas"
+                    values={[
+                      { dotClassName: 'dot-available', value: 'Disponible' },
+                      { dotClassName: 'dot-unavailable', value: 'No disponible' },
+                    ]}
+                  />
+                  <ChartCard
+                    data={data.pieChartData}
+                    title="Duración de reservaciones (tiempo promedio)"
+                    values={[
+                      { dotClassName: 'dot-available', value: 'Más de 1 hora' },
+                      { dotClassName: 'dot-unavailable', value: 'Menos de 1 hora' },
+                    ]}
+                  />
                 </div>
               </div>
             </div>

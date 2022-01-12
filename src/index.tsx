@@ -6,24 +6,27 @@ import { RequireAuth, Layout } from './components'
 import reportWebVitals from './reportWebVitals'
 import './index.css'
 import { AuthProvider } from './contexts/Auth'
+import { ParkingProvider } from './contexts/Parking'
 
 ReactDOM.render(
   <AuthProvider>
-    <BrowserRouter>
-      <Layout>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route
-            path="/"
-            element={
-              <RequireAuth redirectTo="/login">
-                <Home />
-              </RequireAuth>
-            }
-          />
-        </Routes>
-      </Layout>
-    </BrowserRouter>
+    <ParkingProvider>
+      <BrowserRouter>
+        <Layout>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route
+              path="/"
+              element={
+                <RequireAuth redirectTo="/login">
+                  <Home />
+                </RequireAuth>
+              }
+            />
+          </Routes>
+        </Layout>
+      </BrowserRouter>
+    </ParkingProvider>
   </AuthProvider>,
   document.getElementById('root'),
 )
