@@ -35,7 +35,6 @@ function reducer(state: ParkingState, action: ParkingActions): ParkingState {
       return { ...state, isLoadingParkingSlots: false }
     }
     case 'SET_PARKING_SLOTS':
-      console.log({ adadd: action.parkingSlots })
       return {
         ...state,
         parkingSlots: action.parkingSlots,

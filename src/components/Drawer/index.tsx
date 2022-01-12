@@ -1,12 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Drawer as AntdDrawer, Space, DrawerProps as AntdDrawerProps } from 'antd'
 import { Button, Input, Select } from './../'
 
-const Extra = ({ onClose }: any) => {
+const Extra = ({ onClose, onSave }: any) => {
   return (
     <Space>
       <Button onClick={onClose}>Cancelar</Button>
-      <Button type="primary" onClick={() => null}>
+      <Button type="primary" onClick={onSave}>
         Guardar
       </Button>
     </Space>
@@ -14,9 +14,38 @@ const Extra = ({ onClose }: any) => {
 }
 
 interface DrawerProps extends AntdDrawerProps {
-  parkingSlotsListData: any[]
+  parkingSlotsSelectOptions: any[]
+  onChangeParkingSlotId: (value: any) => void
+  onChangePlate: (value: any) => void
+  onSave: () => void
 }
-function Drawer({ visible, onClose, parkingSlotsListData }: DrawerProps) {
+function Drawer({
+  visible,
+  onClose,
+  parkingSlotsSelectOptions,
+  onChangeParkingSlotId,
+  onChangePlate,
+  onSave,
+}: DrawerProps) {
+  const [selectedOption, setSelectedOption] = useState()
+  const [inputValue, setInputValue] = useState()
+
+  const onChangeSelect = (value: any) => {
+    setSelectedOption(value)
+    onChangeParkingSlotId(value)
+  }
+
+  const onChangeInput = (event: any) => {
+    setInputValue(event.target.value.toUpperCase())
+    onChangePlate(event.target.value.toUpperCase())
+  }
+
+  const onSaveForm = () => {
+    onSave()
+    setSelectedOption(undefined)
+    setInputValue(undefined)
+  }
+
   return (
     <AntdDrawer
       title="Reservar"
@@ -24,13 +53,21 @@ function Drawer({ visible, onClose, parkingSlotsListData }: DrawerProps) {
       onClose={onClose}
       width={400}
       visible={visible}
-      extra={<Extra onClose={onClose} />}
+      extra={<Extra onClose={onClose} onSave={onSaveForm} />}
     >
-      <Input label="Patente" placeholder="Ingrese placa patente" />
+      <Input
+        maxLength={6}
+        label="Patente"
+        placeholder="Ingrese placa patente"
+        onChange={onChangeInput}
+        value={inputValue}
+      />
       <Select
-        options={parkingSlotsListData}
+        value={selectedOption}
+        options={parkingSlotsSelectOptions}
         placeholder="Seleccione plaza"
         title="Plaza estacionamiento"
+        onChange={onChangeSelect}
       />
     </AntdDrawer>
   )

@@ -1,4 +1,13 @@
 @import '~antd/dist/antd.css';
+
+* {
+    user-select: none;
+}
+
 p {
     margin: 0;
+}
+
+img {
+    -webkit-user-drag: none;
 }

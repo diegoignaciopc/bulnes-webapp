@@ -8,11 +8,11 @@ export const bookingColumns = [
     dataIndex: 'startedAt',
   },
   {
-    title: 'Fecha Final',
+    title: 'Fecha Término',
     dataIndex: 'finishedAt',
   },
   {
-    title: 'Total ($)',
+    title: 'Total (CLP)',
     dataIndex: 'total',
   },
   {
@@ -93,7 +93,7 @@ export const getAvailableParkingSlotsOptions = (parkingSlotsData: any[]) => {
     .filter((parkingSlot) => parkingSlot.status === 'available')
     .map((parkingSlot) => ({
       label: parkingSlot.name,
-      value: parkingSlot.id,
+      value: parkingSlot._id,
     }))
 }
 

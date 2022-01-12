@@ -1,21 +1,51 @@
-import { Layout, Table, Popconfirm, message, Spin } from 'antd'
+import { Layout, message, Popconfirm, Table } from 'antd'
 import React, { useEffect, useState } from 'react'
 import carImage from '../../images/bulnes-car.png'
 import './styles.css'
 
-import { SectionTitle, Drawer, Sider, ChartCard } from '../../components'
+import { ChartCard, Drawer, SectionTitle, Sider } from '../../components'
 import * as data from './data'
+import { getAvailableParkingSlotsOptions } from './data'
 import { useAuth } from '../../contexts/Auth'
 import { useParking } from '../../contexts/Parking'
-import { getAvailableParkingSlotsOptions } from './data'
-import { finishBooking } from '../../services/Parking'
+import { createBooking, finishBooking } from '../../services/Parking'
+import dayjs from 'dayjs'
 
 const { Content } = Layout
 
+function timeConvert(n: number) {
+  if (isNaN(n)) return ''
+  const hours = n / 60
+  const rhours = Math.floor(hours)
+  const minutes = (hours - rhours) * 60
+  const rminutes = Math.round(minutes)
+  if (rhours === 0) return `${rminutes} minutos`
+  return `${rhours} horas y ${rminutes} minutos`
+}
+
 function Home() {
   const [visible, setVisible] = useState(false)
+  const [plate, setPlate] = useState(undefined)
+
+  const [hourBookings, setHourBookings] = useState<number | undefined>(undefined)
+  const [minuteBookings, setMinuteBookings] = useState<number | undefined>(undefined)
+
+  const [parkingSlotId, setParkingSlotId] = useState(undefined)
   const showDrawer = () => setVisible(true)
   const onClose = () => setVisible(false)
+
+  const onSaveBooking = async () => {
+    if (!plate || !parkingSlotId) return message.error('Datos faltantes')
+    try {
+      await createBooking({ parkingSlotId, plate })
+      message.success('Reservación guardada exitosamente')
+      setVisible(false)
+      await getBookings()
+      await getParkingSlots()
+    } catch (err) {
+      message.error('Ocurrió un error')
+    }
+  }
 
   const {
     state: { name },
@@ -35,6 +65,11 @@ function Home() {
     }
     init()
   }, [])
+
+  useEffect(() => {
+    setHourBookings(bookings.filter((booking) => booking.elapsedMinutes >= 60).length)
+    setMinuteBookings(bookings.filter((booking) => booking.elapsedMinutes < 60).length)
+  }, [bookings])
 
   const confirm = async (bookingReference: string) => {
     try {
@@ -56,7 +91,10 @@ function Home() {
       <Drawer
         visible={visible}
         onClose={onClose}
-        parkingSlotsListData={getAvailableParkingSlotsOptions(parkingSlots)}
+        onChangePlate={(value: any) => setPlate(value)}
+        onChangeParkingSlotId={(value: any) => setParkingSlotId(value)}
+        onSave={onSaveBooking}
+        parkingSlotsSelectOptions={getAvailableParkingSlotsOptions(parkingSlots)}
       />
       <Layout className="menu-layout">
         <Sider />
@@ -101,6 +139,7 @@ function Home() {
                     if (parkingSlot.status === 'unavailable') {
                       return (
                         <Popconfirm
+                          key={i}
                           title="¿Seguro que desea Finalizar la reservación?"
                           onConfirm={() => confirm(parkingSlot.bookingReference)}
                           onCancel={() => null}
@@ -151,7 +190,18 @@ function Home() {
                     loading={isLoadingBookings}
                     bordered
                     columns={data.bookingColumns}
-                    dataSource={bookings}
+                    dataSource={bookings.map((booking: any) => ({
+                      ...booking,
+                      total: isNaN(booking.total)
+                        ? ''
+                        : new Intl.NumberFormat('es-CL', {
+                            currency: 'CLP',
+                            style: 'currency',
+                          }).format(booking.total),
+                      elapsedMinutes: timeConvert(booking.elapsedMinutes),
+                      startedAt: dayjs(booking.startedAt).format('DD/MM/YYYY hh:mm'),
+                      finishedAt: dayjs(booking.finishedAt).format('DD/MM/YYYY HH:mm'),
+                    }))}
                     pagination={false}
                   />
                 </div>
@@ -160,7 +210,16 @@ function Home() {
                 <SectionTitle title="Indicadores" />
                 <div className="charts-container">
                   <ChartCard
-                    data={data.pieChartData}
+                    data={[
+                      {
+                        name: 'Available',
+                        value: parkingSlots.filter((ps) => ps.status === 'available').length,
+                      },
+                      {
+                        name: 'Unavailable',
+                        value: parkingSlots.filter((ps) => ps.status === 'unavailable').length,
+                      },
+                    ]}
                     title="Niveles de ocupación de plazas"
                     values={[
                       { dotClassName: 'dot-available', value: 'Disponible' },
@@ -168,7 +227,10 @@ function Home() {
                     ]}
                   />
                   <ChartCard
-                    data={data.pieChartData}
+                    data={[
+                      { name: 'Hours', value: hourBookings || 0 },
+                      { name: 'Minutes', value: minuteBookings },
+                    ]}
                     title="Duración de reservaciones (tiempo promedio)"
                     values={[
                       { dotClassName: 'dot-available', value: 'Más de 1 hora' },

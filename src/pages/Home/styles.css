@@ -82,10 +82,12 @@
     background-color: white;
     border-radius: 50px;
     padding: 20px;
+    cursor: pointer;
     font-size: 18px;
 }
 
 .parking-icon-unavailable {
+    cursor: pointer;
     color: #F43F5E;
     background-color: white;
     border-radius: 50px;

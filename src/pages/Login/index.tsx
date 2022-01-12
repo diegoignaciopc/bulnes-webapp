@@ -18,8 +18,6 @@ function Login() {
     state: { isSignInLoading, isAuthenticated },
   } = useAuth()
 
-  console.log(isSignInLoading)
-
   const navigate = useNavigate()
 
   const onSubmit = async () => {

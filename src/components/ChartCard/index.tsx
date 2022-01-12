@@ -20,8 +20,8 @@ function ChartCard({ data, title, values }: ChartCardProps) {
         </div>
         <div className="legend-container">
           <div className="legend-title">{title}</div>
-          {values.map((item) => (
-            <div className="legend-label">
+          {values.map((item, i) => (
+            <div key={i} className="legend-label">
               <div className={item.dotClassName} />
               <p>{item.value}</p>
             </div>
