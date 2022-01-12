@@ -13,8 +13,10 @@ export function insertAuthorizationHeader(api: any) {
   }
 }
 
-const client: AxiosInstance = axios.create({ baseURL: config.BULNES_SERVICE_URL })
+const client: AxiosInstance = axios.create({
+  baseURL: config.BULNES_SERVICE_URL,
+})
 
-client.interceptors.request.use(insertAuthorizationHeader, (error) => Promise.reject(error))
+client.interceptors.request.use(insertAuthorizationHeader, (error: any) => Promise.reject(error))
 
 export default client

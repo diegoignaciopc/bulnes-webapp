@@ -1,5 +1,5 @@
 import { signIn, SignInParams } from '../../services/Auth'
-import { AuthDispatch, AuthState } from './context'
+import { AuthDispatch } from './context'
 import { clearState } from '../../utils/localStorage'
 
 export function actionReset(dispatch: AuthDispatch) {

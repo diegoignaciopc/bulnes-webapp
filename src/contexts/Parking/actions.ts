@@ -1,6 +1,4 @@
-import { signIn, SignInParams } from '../../services/Auth'
-import { ParkingDispatch, ParkingState } from './context'
-import { clearState } from '../../utils/localStorage'
+import { ParkingDispatch } from './context'
 import { getBookings, getParkingSlots } from '../../services/Parking'
 
 export function actionFetchBookings(dispatch: ParkingDispatch) {
