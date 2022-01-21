@@ -6,7 +6,6 @@
 }
 
 .chart-card-container{
-    box-shadow: rgb(0 0 0 / 10%) 0 4px 8px 0;
     display: flex;
     justify-content: space-between;
 }
@@ -17,6 +16,7 @@
     display: flex;
     background-Color: white;
     border-Radius: 6px;
+    box-shadow: rgb(0 0 0 / 10%) 0 4px 8px 0;
 }
 
 .legend-container {

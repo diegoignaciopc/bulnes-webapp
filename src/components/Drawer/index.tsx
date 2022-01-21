@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Drawer as AntdDrawer, Space, DrawerProps as AntdDrawerProps } from 'antd'
 import { Button, Input, Select } from './../'
 
@@ -18,6 +18,7 @@ interface DrawerProps extends AntdDrawerProps {
   onChangeParkingSlotId: (value: any) => void
   onChangePlate: (value: any) => void
   onSave: () => void
+  preselectedParkingSlotId?: string
 }
 function Drawer({
   visible,
@@ -26,9 +27,20 @@ function Drawer({
   onChangeParkingSlotId,
   onChangePlate,
   onSave,
+  preselectedParkingSlotId,
 }: DrawerProps) {
-  const [selectedOption, setSelectedOption] = useState()
-  const [inputValue, setInputValue] = useState()
+  const [selectedOption, setSelectedOption] = useState<any>()
+  const [inputValue, setInputValue] = useState<any>()
+
+  useEffect(() => {
+    if (preselectedParkingSlotId) {
+      const option = parkingSlotsSelectOptions.find(
+        (option) => option.value === preselectedParkingSlotId,
+      )
+      setSelectedOption(option.value)
+      onChangeParkingSlotId(option.value)
+    }
+  }, [preselectedParkingSlotId])
 
   const onChangeSelect = (value: any) => {
     setSelectedOption(value)
@@ -46,14 +58,19 @@ function Drawer({
     setInputValue(undefined)
   }
 
+  const onCloseDrawer = (e: any) => {
+    setSelectedOption(undefined)
+    if (onClose) onClose(e)
+  }
+
   return (
     <AntdDrawer
       title="Reservar"
       placement="right"
-      onClose={onClose}
+      onClose={onCloseDrawer}
       width={400}
       visible={visible}
-      extra={<Extra onClose={onClose} onSave={onSaveForm} />}
+      extra={<Extra onClose={onCloseDrawer} onSave={onSaveForm} />}
     >
       <Input
         maxLength={6}

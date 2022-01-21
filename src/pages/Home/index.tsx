@@ -32,7 +32,14 @@ function Home() {
 
   const [parkingSlotId, setParkingSlotId] = useState(undefined)
   const showDrawer = () => setVisible(true)
-  const onClose = () => setVisible(false)
+  const onClose = () => {
+    setPlate(undefined)
+    setParkingSlotId(undefined)
+    setPreselectedParkingSlotId(undefined)
+    setVisible(false)
+  }
+
+  const [preselectedParkingSlotId, setPreselectedParkingSlotId] = useState<any>(undefined)
 
   const onSaveBooking = async () => {
     if (!plate || !parkingSlotId) return message.error('Datos faltantes')
@@ -42,6 +49,9 @@ function Home() {
       setVisible(false)
       await getBookings()
       await getParkingSlots()
+      setParkingSlotId(undefined)
+      setPlate(undefined)
+      setPreselectedParkingSlotId(undefined)
     } catch (err) {
       message.error('Ocurrió un error')
     }
@@ -82,15 +92,18 @@ function Home() {
     }
   }
 
-  const handleParkingSlotClick = (status: string) => {
-    if (status === 'available') setVisible(true)
+  const handleParkingSlotClick = (parkingSlotId: string) => {
+    setPreselectedParkingSlotId(parkingSlotId)
+    setVisible(true)
   }
 
   const availableSlots = parkingSlots.filter((ps) => ps.status === 'available').length
   const unavailableSlots = parkingSlots.filter((ps) => ps.status === 'unavailable').length
+
   return (
     <div style={{ marginLeft: 200 }}>
       <Drawer
+        preselectedParkingSlotId={preselectedParkingSlotId}
         visible={visible}
         onClose={onClose}
         onChangePlate={(value: any) => setPlate(value)}
@@ -148,11 +161,7 @@ function Home() {
                           okText="Si, finalizar"
                           cancelText="No, esperar"
                         >
-                          <div
-                            className="parking-icon-unavailable"
-                            key={i}
-                            onClick={() => handleParkingSlotClick(parkingSlot.status)}
-                          >
+                          <div className="parking-icon-unavailable" key={i}>
                             <img
                               src={carImage}
                               alt="bulnes-logo"
@@ -167,7 +176,7 @@ function Home() {
                       <div
                         className="parking-icon-available"
                         key={i}
-                        onClick={() => handleParkingSlotClick(parkingSlot.status)}
+                        onClick={() => handleParkingSlotClick(parkingSlot._id)}
                       >
                         <img
                           src={carImage}

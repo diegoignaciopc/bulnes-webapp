@@ -103,4 +103,5 @@
 .charts-container {
     display: flex;
     justify-content: space-between;
+    min-height: 70vh;
 }
