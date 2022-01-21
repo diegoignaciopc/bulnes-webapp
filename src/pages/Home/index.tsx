@@ -86,6 +86,8 @@ function Home() {
     if (status === 'available') setVisible(true)
   }
 
+  const availableSlots = parkingSlots.filter((ps) => ps.status === 'available').length
+  const unavailableSlots = parkingSlots.filter((ps) => ps.status === 'unavailable').length
   return (
     <div style={{ marginLeft: 200 }}>
       <Drawer
@@ -199,8 +201,10 @@ function Home() {
                             style: 'currency',
                           }).format(booking.total),
                       elapsedMinutes: timeConvert(booking.elapsedMinutes),
-                      startedAt: dayjs(booking.startedAt).format('DD/MM/YYYY hh:mm'),
-                      finishedAt: dayjs(booking.finishedAt).format('DD/MM/YYYY HH:mm'),
+                      startedAt: dayjs(booking.startedAt).format('DD/MM/YYYY HH:mm'),
+                      finishedAt: booking?.finishedAt
+                        ? dayjs(booking.finishedAt).format('DD/MM/YYYY HH:mm')
+                        : '',
                     }))}
                     pagination={false}
                   />
@@ -222,8 +226,11 @@ function Home() {
                     ]}
                     title="Niveles de ocupación de plazas"
                     values={[
-                      { dotClassName: 'dot-available', value: 'Disponible' },
-                      { dotClassName: 'dot-unavailable', value: 'No disponible' },
+                      { dotClassName: 'dot-available', value: `Disponible (${availableSlots})` },
+                      {
+                        dotClassName: 'dot-unavailable',
+                        value: `No disponible (${unavailableSlots})`,
+                      },
                     ]}
                   />
                   <ChartCard
@@ -233,8 +240,14 @@ function Home() {
                     ]}
                     title="Duración de reservaciones (tiempo promedio)"
                     values={[
-                      { dotClassName: 'dot-available', value: 'Más de 1 hora' },
-                      { dotClassName: 'dot-unavailable', value: 'Menos de 1 hora' },
+                      {
+                        dotClassName: 'dot-available',
+                        value: `Más de 1 hora (${hourBookings || 0})`,
+                      },
+                      {
+                        dotClassName: 'dot-unavailable',
+                        value: `Menos de 1 hora (${minuteBookings})`,
+                      },
                     ]}
                   />
                 </div>
